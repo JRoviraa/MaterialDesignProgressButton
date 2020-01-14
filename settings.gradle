@@ -1,0 +1,2 @@
+include ':app', ':materialdesignprogressbutton'
+rootProject.name='MaterialDesignProgressButton'
