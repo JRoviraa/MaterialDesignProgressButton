@@ -48,10 +48,14 @@ dependencies {
 />
 ```
 
-2. Replace your MaterialButton objects with MaterialDesignProgressButton objects:
+2. Replace your `MaterialButton` objects with `MaterialDesignProgressButton` objects:
 
 ```kotlin
 private lateinit var button: MaterialButton
+```
+
+```kotlin
+private lateinit var button: MaterialDesignProgressButton
 ```
 
 3. Use progress functions from your activity or fragment:
@@ -63,6 +67,4 @@ button.hideLoading()
 _For an example check the app module of this project_
   
 
-```kotlin
-private lateinit var button: MaterialDesignProgressButton
-```
+
