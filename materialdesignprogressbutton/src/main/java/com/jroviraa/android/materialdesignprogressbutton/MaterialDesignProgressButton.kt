@@ -4,7 +4,9 @@ package com.jroviraa.android.materialdesignprogressbutton
 import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
+import android.util.TypedValue
 import com.google.android.material.button.MaterialButton
+
 
 class MaterialDesignProgressButton : MaterialButton {
     private var isLoading = false
@@ -61,7 +63,8 @@ class MaterialDesignProgressButton : MaterialButton {
     private fun drawIndeterminateProgress(canvas: Canvas?) {
         if (mAnimatedDrawable == null) {
             val offset = (width - height) / 2
-            mAnimatedDrawable = ProgressDrawable(R.attr.colorAccent, mStrokeWidth.toFloat())
+
+            mAnimatedDrawable = ProgressDrawable(getThemeAccentColor(), mStrokeWidth.toFloat())
             val left = offset + mPaddingProgress
             val right = width - offset - mPaddingProgress
             val bottom = height - mPaddingProgress
@@ -72,6 +75,12 @@ class MaterialDesignProgressButton : MaterialButton {
         } else {
             mAnimatedDrawable!!.draw(canvas!!)
         }
+    }
+
+    private fun getThemeAccentColor(): Int {
+        val value = TypedValue()
+        context.theme.resolveAttribute(R.attr.colorAccent, value, true)
+        return value.data
     }
 
     private fun setLoading(loading: Boolean) {
