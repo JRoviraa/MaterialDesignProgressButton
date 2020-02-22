@@ -1,6 +1,6 @@
 # MaterialDesignProgressButton
 
-[![](https://jitpack.io/v/JRoviraa/MaterialDesignProgressButton.svg)](https://jitpack.io/#JRoviraa/MaterialDesignProgressButton)
+[![](https://jitpack.io/v/jrovira037/MaterialDesignProgressButton.svg)](https://jitpack.io/#jrovira037/MaterialDesignProgressButton)
 [![Known Vulnerabilities](https://snyk.io/test/github/JRoviraa/MaterialDesignProgressButton/badge.svg?targetFile=materialdesignprogressbutton/build.gradle)](https://snyk.io/test/github/JRoviraa/MaterialDesignProgressButton?targetFile=materialdesignprogressbutton/build.gradle)
 
 This project was based on LoadingButton by koushikcse (https://github.com/koushikcse/LoadingButton)
@@ -26,7 +26,7 @@ allprojects {
 
 ```groovy
 dependencies {
-  implementation 'com.github.jrovira037:MaterialDesignProgressButton:0.1.1'
+  implementation 'com.github.jrovira037:MaterialDesignProgressButton:0.1.2'
 }
 ```
 
@@ -48,10 +48,14 @@ dependencies {
 />
 ```
 
-2. Replace your MaterialButton objects with MaterialDesignProgressButton objects:
+2. Replace your `MaterialButton` objects with `MaterialDesignProgressButton` objects:
 
 ```kotlin
 private lateinit var button: MaterialButton
+```
+
+```kotlin
+private lateinit var button: MaterialDesignProgressButton
 ```
 
 3. Use progress functions from your activity or fragment:
@@ -63,6 +67,4 @@ button.hideLoading()
 _For an example check the app module of this project_
   
 
-```kotlin
-private lateinit var button: MaterialDesignProgressButton
-```
+
