@@ -13,31 +13,34 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
 
-    private lateinit var buttonDesign: MaterialDesignProgressButton
+    private lateinit var textButton: MaterialDesignProgressButton
+    private lateinit var iconButton: MaterialDesignProgressButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         loadComponents()
-        setUpListener()
+        setUpListener(textButton)
+        setUpListener(iconButton)
     }
 
     private fun loadComponents() {
-        buttonDesign = findViewById(R.id.button)
+        textButton = findViewById(R.id.textButton)
+        iconButton = findViewById(R.id.iconButton)
     }
 
-    private fun setUpListener() {
-        buttonDesign.setOnClickListener {
-            buttonDesign.isClickable = false
-            buttonDesign.showLoading()
+    private fun setUpListener(button: MaterialDesignProgressButton) {
+        button.setOnClickListener {
+            button.isClickable = false
+            button.showLoading()
 
             launch {
                 withContext(Dispatchers.IO) {
                     Thread.sleep(2000)
                 }
-                buttonDesign.hideLoading()
-                buttonDesign.isClickable = true
+                button.hideLoading()
+                button.isClickable = true
             }
         }
     }

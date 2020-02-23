@@ -3,25 +3,32 @@ package com.jroviraa.android.materialdesignprogressbutton
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.util.TypedValue
 import com.google.android.material.button.MaterialButton
 
 
 class MaterialDesignProgressButton : MaterialButton {
+    // config
+    private val mPaddingProgress = 30
+    private val mStrokeWidth = 10
+
+    // internal variables
     private var isLoading = false
     private var mAnimatedDrawable: ProgressDrawable? = null
-    private var mPaddingProgress = 30
-    private var mStrokeWidth = 10
+    private var mCanvas: Canvas? = null
+
+    // save button state
     private var buttonText = ""
-    private var mcanvas: Canvas? = null
+    private var buttonIcon: Drawable? = null
 
     constructor(context: Context?) : super(context!!) {
-        init()
+        saveButtonState()
     }
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-        init()
+        saveButtonState()
     }
 
     constructor(
@@ -29,28 +36,22 @@ class MaterialDesignProgressButton : MaterialButton {
         attrs: AttributeSet,
         defStyleAttr: Int
     ) : super(context, attrs, defStyleAttr) {
-        init()
+        saveButtonState()
     }
 
-    private fun init() {
+    private fun saveButtonState() {
         buttonText = text.toString()
+        buttonIcon = icon
     }
-
 
     // override MaterialButton.onDraw
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        mcanvas = canvas
-        if (isLoading) {
-            drawIndeterminateProgress(canvas)
-            text = ""
-        } else {
-            if (buttonText.isNotEmpty()) text = buttonText
-        }
+        mCanvas = canvas
+        updateButton()
     }
 
     // public functions
-
     fun showLoading() {
         setLoading(true)
     }
@@ -85,11 +86,17 @@ class MaterialDesignProgressButton : MaterialButton {
 
     private fun setLoading(loading: Boolean) {
         isLoading = loading
+        updateButton()
+    }
+
+    private fun updateButton() {
         if (isLoading) {
-            drawIndeterminateProgress(mcanvas)
+            drawIndeterminateProgress(mCanvas)
             text = ""
+            icon = null
         } else {
             if (buttonText.isNotEmpty()) text = buttonText
+            if (buttonIcon != null) icon = buttonIcon
         }
     }
 }
