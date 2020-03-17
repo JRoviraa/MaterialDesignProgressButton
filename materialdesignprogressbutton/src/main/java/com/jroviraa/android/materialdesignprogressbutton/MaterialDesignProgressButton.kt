@@ -27,7 +27,10 @@ class MaterialDesignProgressButton : MaterialButton {
         saveButtonState()
     }
 
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
+    constructor(
+        context: Context,
+        attrs: AttributeSet
+    ) : super(context, attrs) {
         saveButtonState()
     }
 
@@ -87,6 +90,15 @@ class MaterialDesignProgressButton : MaterialButton {
     private fun setLoading(loading: Boolean) {
         isLoading = loading
         updateButton()
+    }
+
+    override fun setText(
+        text: CharSequence?,
+        type: BufferType?
+    ) {
+        super.setText(text, type)
+
+        this.buttonText = text.toString()
     }
 
     private fun updateButton() {
