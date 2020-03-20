@@ -5,19 +5,18 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
-import android.util.TypedValue
 import com.google.android.material.button.MaterialButton
 
 
 class MaterialDesignProgressButton : MaterialButton {
     // config
-    private val mPaddingProgress = 30
-    private val mStrokeWidth = 10
+    private val paddingProgress = 30
+    private val strokeWidthProgress = 10
 
     // internal variables
     private var isLoading = false
-    private var mAnimatedDrawable: ProgressDrawable? = null
-    private var mCanvas: Canvas? = null
+    private var progressDrawable: ProgressDrawable? = null
+    private var canvas: Canvas? = null
 
     // save button state
     private var buttonText = ""
@@ -50,8 +49,17 @@ class MaterialDesignProgressButton : MaterialButton {
     // override MaterialButton.onDraw
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        mCanvas = canvas
+        this.canvas = canvas
         updateButton()
+    }
+
+    // override MaterialButton.setText
+    override fun setText(text: CharSequence?, type: BufferType?) {
+        super.setText(text, type)
+
+        if (!isLoading) {
+            this.buttonText = text.toString()
+        }
     }
 
     // public functions
@@ -65,26 +73,20 @@ class MaterialDesignProgressButton : MaterialButton {
 
     // internal functions
     private fun drawIndeterminateProgress(canvas: Canvas?) {
-        if (mAnimatedDrawable == null) {
+        if (progressDrawable == null) {
             val offset = (width - height) / 2
 
-            mAnimatedDrawable = ProgressDrawable(getThemeAccentColor(), mStrokeWidth.toFloat())
-            val left = offset + mPaddingProgress
-            val right = width - offset - mPaddingProgress
-            val bottom = height - mPaddingProgress
-            val top = mPaddingProgress
-            mAnimatedDrawable!!.setBounds(left, top, right, bottom)
-            mAnimatedDrawable!!.callback = this
-            mAnimatedDrawable!!.start()
+            progressDrawable = ProgressDrawable(currentTextColor, strokeWidthProgress.toFloat())
+            val left = offset + paddingProgress
+            val right = width - offset - paddingProgress
+            val bottom = height - paddingProgress
+            val top = paddingProgress
+            progressDrawable!!.setBounds(left, top, right, bottom)
+            progressDrawable!!.callback = this
+            progressDrawable!!.start()
         } else {
-            mAnimatedDrawable!!.draw(canvas!!)
+            progressDrawable!!.draw(canvas!!)
         }
-    }
-
-    private fun getThemeAccentColor(): Int {
-        val value = TypedValue()
-        context.theme.resolveAttribute(R.attr.colorAccent, value, true)
-        return value.data
     }
 
     private fun setLoading(loading: Boolean) {
@@ -92,18 +94,9 @@ class MaterialDesignProgressButton : MaterialButton {
         updateButton()
     }
 
-    override fun setText(
-        text: CharSequence?,
-        type: BufferType?
-    ) {
-        super.setText(text, type)
-
-        this.buttonText = text.toString()
-    }
-
     private fun updateButton() {
         if (isLoading) {
-            drawIndeterminateProgress(mCanvas)
+            drawIndeterminateProgress(canvas)
             text = ""
             icon = null
         } else {
