@@ -26,7 +26,7 @@ allprojects {
 
 ```groovy
 dependencies {
-  implementation 'com.github.jrovira037:MaterialDesignProgressButton:0.1.2'
+  implementation 'com.github.jrovira037:MaterialDesignProgressButton:0.1.6'
 }
 ```
 
